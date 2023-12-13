@@ -1,0 +1,13 @@
+{
+  "name": "check-game-api",
+  "version": "1.0.0",
+  "main": "index.py",
+  "license": "MIT",
+  "scripts": {
+  	"dev": "py index.py",
+  	"migrate": "py -m alembic upgrade head",
+  	"migrate:rollback": "py -m alembic downgrade -1",
+  	"migrate:rollback-all": "py -m alembic downgrade base",
+  	"create:migration": "py -m alembic revision -m "
+  }
+}
