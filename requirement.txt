@@ -8,3 +8,5 @@ python-dotenv
 sanic_cors
 uvicorn
 datetime
+requests
+jwt
