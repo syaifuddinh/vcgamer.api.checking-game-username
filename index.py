@@ -52,4 +52,4 @@ if __name__ == "__main__":
     # reloader.start_watcher_thread()
     # end of Hot reload
 
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=3001)
