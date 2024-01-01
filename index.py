@@ -12,45 +12,44 @@ from controllers import TestingController
 from sanic_cors import CORS, cross_origin
 
 
-def application(environ, start_response):
-	load_dotenv()
+load_dotenv()
 
-	app = Sanic("CheckingGameApp")
-	app.config.db = {
-		"name": os.environ.get("DB_NAME"),
-		"username": os.environ.get("DB_USER"),
-		"host": os.environ.get("DB_HOST"),
-		"password": os.environ.get("DB_PASSWORD"),
-		"port": os.environ.get("DB_PORT")
-	}
+app = Sanic("CheckingGameApp")
+app.config.db = {
+	"name": os.environ.get("DB_NAME"),
+	"username": os.environ.get("DB_USER"),
+	"host": os.environ.get("DB_HOST"),
+	"password": os.environ.get("DB_PASSWORD"),
+	"port": os.environ.get("DB_PORT")
+}
 
-	@app.get("/")
-	async def Index(request):
-		return json({
-			"isSuccess": True, 
-			"statusCode": 200,
-			"dbName": app.config.db["name"]
-		})
+@app.get("/")
+async def Index(request):
+	return json({
+		"isSuccess": True, 
+		"statusCode": 200,
+		"dbName": app.config.db["name"]
+	})
 
-	@app.get("/test")
-	async def Test(request):
-		return TestingController.Get(request)
-
+@app.get("/test")
+async def Test(request):
+	return TestingController.Get(request)
 
 
-	Game.Init()
-	Auth.Init()
 
-	CORS(app, resources={r"/*": {"origins": "*"}})
-	# app.register_listener(setup_options, "before_server_start")
-	# app.register_middleware(add_cors_headers, "response")
+Game.Init()
+Auth.Init()
 
-	if __name__ == "__main__":
+CORS(app, resources={r"/*": {"origins": "*"}})
+# app.register_listener(setup_options, "before_server_start")
+# app.register_middleware(add_cors_headers, "response")
 
-		# Hot reload
+if __name__ == "__main__":
 
-	    # reloader = LiveReloader()
-	    # reloader.start_watcher_thread()
-	    # end of Hot reload
+	# Hot reload
 
-	    app.run(host="0.0.0.0", port=3001)
+    # reloader = LiveReloader()
+    # reloader.start_watcher_thread()
+    # end of Hot reload
+
+    app.run(host="0.0.0.0", port=8000)
