@@ -1,0 +1,9 @@
+sanic
+selenium
+alembic
+psycopg2
+bcrypt
+datetime
+aoiklivereload
+time
+dotenv
