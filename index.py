@@ -4,13 +4,17 @@ from aoiklivereload import LiveReloader
 from dotenv import load_dotenv
 import os
 from routes import Game
-from sanic_cors import CORS
+from routes import Auth
 from controllers import TestingController
+
+# from configs.CORS import add_cors_headers 
+# from configs.Options import setup_options 
+from sanic_cors import CORS, cross_origin
+
 
 load_dotenv()
 
 app = Sanic("CheckingGameApp")
-CORS(app, resources={r"*": {"origins": "*"}}, automatic_options=True)
 app.config.db = {
 	"name": os.environ.get("DB_NAME"),
 	"username": os.environ.get("DB_USER"),
@@ -34,6 +38,11 @@ async def Test(request):
 
 
 Game.Init()
+Auth.Init()
+
+CORS(app, resources={r"/*": {"origins": "*"}})
+# app.register_listener(setup_options, "before_server_start")
+# app.register_middleware(add_cors_headers, "response")
 
 if __name__ == "__main__":
 

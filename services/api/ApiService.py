@@ -1,4 +1,5 @@
 import requests
+import json
 
 # Replace 'your_api_url' with the actual URL of the API you want to interact with
 
@@ -18,7 +19,9 @@ def Get(apiUrl):
 
 def Post(apiUrl, params):
 	# Make a GET request to the API
-	response = requests.post(apiUrl, data=params)
+	headers = {'Content-Type': 'application/json'}
+	jsonData = json.dumps(params)
+	response = requests.post(apiUrl, data=jsonData, headers=headers)
 	data = {}
 	# Check if the request was successful (status code 200)
 	if response.status_code == 200:

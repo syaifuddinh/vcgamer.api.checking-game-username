@@ -25,7 +25,7 @@ def upgrade() -> None:
 		sa.Column('codashopSlug', sa.String(), nullable=False),
 		sa.Column('gameSlug', sa.String(), nullable=False),
 		sa.Column('additionalField', sa.String(), nullable=True),
-		sa.Column('scrapingMethod', sa.String(), nullable=False),
+		sa.Column('additionalFieldType', sa.String(), nullable=False),
 		sa.PrimaryKeyConstraint('id')
 	)
     op.create_index('MTCodashopGame-GameSlugIndex', 'MTCodashopGame', ['gameSlug'], unique=False)

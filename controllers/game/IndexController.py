@@ -1,5 +1,6 @@
 from sanic.response import json
 from utils import Database
+from services.game import GameService
 
 def Get(request):
 	keyword = request.args.get("keyword")
@@ -18,6 +19,16 @@ def Get(request):
 	} for item in gameList] 
 
 	return json({
-		"statusCode": 200,
+		"status": 200,
+		"message": None,
+		"data": data
+	})
+
+def Show(request, gameSlug):
+	data = GameService.GetGameAttribute(gameSlug)
+
+	return json({
+		"status": 200,
+		"message": None,
 		"data": data
 	})

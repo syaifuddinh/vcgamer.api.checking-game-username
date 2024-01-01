@@ -27,6 +27,8 @@ def upgrade() -> None:
 		sa.Column('name', sa.String(), nullable=False),
 		sa.Column('slug', sa.String(), nullable=False),
 		sa.Column('thumbnailUrl', sa.String(), nullable=True),
+		sa.Column('hasCodashop', sa.Boolean(), nullable=False, server_default=sa.text("False")),
+		sa.Column('hasJollymax', sa.Boolean(), nullable=False, server_default=sa.text("False")),
 		sa.PrimaryKeyConstraint('id')
 	)
 	op.create_index('GameNameIndex', 'MTGame', ['name'], unique=False)
