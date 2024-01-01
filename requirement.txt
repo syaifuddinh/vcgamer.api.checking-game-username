@@ -3,7 +3,7 @@ selenium
 alembic
 psycopg2
 bcrypt
-datetime
 aoiklivereload
-time
-dotenv
+python-dotenv
+sanic_cors
+datetime
