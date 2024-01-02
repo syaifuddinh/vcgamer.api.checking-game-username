@@ -24,12 +24,6 @@ def FirstFromQuery(rawQuery):
 	return result
 
 def Execute(rawQuery):
-	dbConfig = GetConfig()
-	# Construct your raw SQL query
-	query = sql.SQL(rawQuery)
-	results = []
-	with psycopg2.connect(**dbConfig) as conn:
-	# Create a cursor object
-		with conn.cursor() as cursor:
-		# Execute the query
-			cursor.execute(query)
+	command = text(rawQuery)
+	db.session.execute(command)
+	db.session.commit()
