@@ -1,4 +1,4 @@
-sanic
+flask
 selenium
 alembic
 psycopg2

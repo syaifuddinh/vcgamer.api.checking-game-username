@@ -1,8 +1,9 @@
 from sanic.response import json
 from utils import Database
 from services.game import LogService 
+from flask import Flask, jsonify, request
 
-def GetLog(request):
+def GetLog():
 	data = None
 	keyword = request.args.get("keyword")
 	transactionStartDate = request.args.get("transactionStartDate")
@@ -14,7 +15,7 @@ def GetLog(request):
 		transactionEndDate=transactionEndDate,
 		activityStatus=activityStatus
 	)
-	return json({
+	return jsonify({
 		"status": 200,
 		"message": None,
 		"data": data

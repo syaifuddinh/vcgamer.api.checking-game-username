@@ -4,23 +4,30 @@ from controllers.game import CheckingGameController
 from controllers.game import LogController
 from sanic.response import json
 from middlewares import AuthMiddleware
+from flask import Flask, jsonify, request
 
-def Init():
-	app = Sanic.get_app("CheckingGameApp")
+def Init(app):
 
-	@app.middleware("request")
-	async def RegisterMiddleware(request):
-		return await AuthMiddleware.ValidateToken(request)
-
-	app.add_route(
-		IndexController.Get, 
+	app.add_url_rule(
 		"/game", 
-		methods=["GET"]
+		"game",
+		IndexController.Get
 	)
-	app.add_route(
+	app.add_url_rule(
+		"/game/<string:gameSlug>", 
+		"game-detail",
 		IndexController.Show, 
-		"/game/<gameSlug>", 
 		methods=["GET"]
 	)
-	app.add_route(CheckingGameController.GetUsernameAvailability, "/check/<gameSlug>", methods=["POST"] )
-	app.add_route(LogController.GetLog, "/log", methods=["GET"] )
+	app.add_url_rule(
+		"/check/<string:gameSlug>",
+		"checking-game",
+		CheckingGameController.GetUsernameAvailability, 
+		methods=["POST"]
+	)
+	app.add_url_rule(
+		"/log", 
+		"log", 
+		LogController.GetLog, 
+		methods=["GET"]
+	)

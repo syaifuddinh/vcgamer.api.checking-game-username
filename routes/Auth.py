@@ -2,8 +2,21 @@ from sanic import Sanic
 from controllers.auth import RegistrationController
 from controllers.auth import AuthController
 
-def Init():
-	app = Sanic.get_app("CheckingGameApp")
-	app.add_route(RegistrationController.Register, "/auth/register", methods=["POST"] )
-	app.add_route(AuthController.Login, "/auth/login", methods=["POST"] )
-	app.add_route(AuthController.GetApiKey, "/auth/api-key", methods=["GET"] )
+def Init(app):
+	app.add_url_rule(
+		"/auth/register", 
+		"registration",
+		RegistrationController.Register, 
+		methods=["POST"] 
+	)
+	app.add_url_rule(
+		"/auth/login", 
+		"login", 
+		AuthController.Login, 
+		methods=["POST"] )
+	app.add_url_rule(
+		"/auth/api-key", 
+		"get-api-key",
+		AuthController.GetApiKey, 
+		methods=["GET"] 
+	)

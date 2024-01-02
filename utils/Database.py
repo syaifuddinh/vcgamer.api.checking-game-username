@@ -1,15 +1,15 @@
 from sanic import Sanic
 import psycopg2
 from psycopg2 import sql
+import os
 
 def GetConfig():
-	app = Sanic.get_app("CheckingGameApp")
 	dbParams = {
-		'dbname': app.config.db["name"],
-		'user': app.config.db["username"],
-		'password': app.config.db["password"],
-		'host': app.config.db["host"],
-		'port': app.config.db["port"]
+		'dbname': os.environ.get('DB_NAME'),
+		'user': os.environ.get('DB_USER'),
+		'password': os.environ.get('DB_PASSWORD'),
+		'host': os.environ.get('DB_HOST'),
+		'port': os.environ.get('DB_PORT')
 	}
 
 	return dbParams

@@ -1,8 +1,8 @@
-from sanic.response import json
 from utils import Database
 from services.game import GameService
+from flask import Flask, jsonify, request
 
-def Get(request):
+def Get():
 	keyword = request.args.get("keyword")
 	gameQuery = '''
 		SELECT id, slug, "name", "thumbnailUrl" 
@@ -18,16 +18,16 @@ def Get(request):
 		"thumbnailUrl": item[3]
 	} for item in gameList] 
 
-	return json({
+	return jsonify({
 		"status": 200,
 		"message": None,
 		"data": data
 	})
 
-def Show(request, gameSlug):
+def Show(gameSlug):
 	data = GameService.GetGameAttribute(gameSlug)
 
-	return json({
+	return jsonify({
 		"status": 200,
 		"message": None,
 		"data": data

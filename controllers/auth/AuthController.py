@@ -2,14 +2,15 @@ from sanic.response import json
 from utils import Database
 from utils import JWT
 from services.auth import AuthService
+from flask import Flask, jsonify, request
 
-def Login(request):
+def Login():
 	keyword = request.args.get("keyword")
 	data = None
 
 	try:
-		email = request.json.get("email")
-		password = request.json.get("password")
+		email = request.get_json()["email"]
+		password = request.get_json()["password"]
 		if email is None:
 			raise Exception("Email is required")
 		if password is None:
@@ -22,27 +23,27 @@ def Login(request):
 		data = { "token": token }
 
 	except Exception as e:
-		return json({
+		return jsonify({
 			"status": 401,
 			"message" : f'{e}',
 			"data": data
 		})		
 
-	return json({
+	return jsonify({
 		"status": 200,
 		"message": "Login is success",
 		"data": data
 	})
 
-def GetApiKey(request):
-	authData = request.headers.get("Authorization")
+def GetApiKey():
+	authData = dict(request.headers)["Authorization"]
 	slicedAuth = authData.split(" ")
 	payload = JWT.Decode(slicedAuth[1])
 	print("payload :")
 	print(payload)
 	email = payload["email"]
 	data = AuthService.GetApiKey(email)
-	return json({
+	return jsonify({
 		"status": 200,
 		"message": None,
 		"data": data
