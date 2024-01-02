@@ -2,34 +2,17 @@ from sanic import Sanic
 import psycopg2
 from psycopg2 import sql
 import os
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 
-def GetConfig():
-	dbParams = {
-		'dbname': os.environ.get('DB_NAME'),
-		'user': os.environ.get('DB_USER'),
-		'password': os.environ.get('DB_PASSWORD'),
-		'host': os.environ.get('DB_HOST'),
-		'port': os.environ.get('DB_PORT')
-	}
-
-	return dbParams
-
+db = SQLAlchemy()
 
 def FetchFromQuery(rawQuery):
-	dbConfig = GetConfig()
-	# Construct your raw SQL query
-	query = sql.SQL(rawQuery)
-	results = []
-	with psycopg2.connect(**dbConfig) as conn:
-	# Create a cursor object
-		with conn.cursor() as cursor:
-		# Execute the query
-			cursor.execute(query)
+	command = text(rawQuery)
+	result = db.session.execute(command)
+	rows = result.fetchall()
 
-			# Fetch all the results
-			results = cursor.fetchall()
-
-	return results
+	return rows
 
 def FirstFromQuery(rawQuery):
 	dbResult = FetchFromQuery(rawQuery)
